@@ -26,6 +26,9 @@ source-repository head
 library
   exposed-modules:
       Lib
+      SortX.Mod
+      SortX.Shell
+      SortX.Utils
   other-modules:
       Paths_haskell_learn
   autogen-modules:
