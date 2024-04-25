@@ -5,6 +5,7 @@ module Medical.Mod
     ABOType (..),
     RhType (..),
     BloodType (..),
+    transfusion
   )
 where
 

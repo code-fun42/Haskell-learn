@@ -7,3 +7,6 @@ import Medical.Blood (BloodType)
 
 class AnalysisBlood a where
   getBloodType :: a -> BloodType
+
+class GeneralAnalysisBlood a where
+  
