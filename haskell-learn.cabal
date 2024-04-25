@@ -26,9 +26,6 @@ source-repository head
 library
   exposed-modules:
       Lib
-      SortX.Mod
-      SortX.Shell
-      SortX.Utils
   other-modules:
       Paths_haskell_learn
   autogen-modules:
@@ -38,6 +35,10 @@ library
   ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints
   build-depends:
       base >=4.7 && <5
+    , deepseq
+    , primitive
+    , vector
+    , vector-stream
   default-language: Haskell2010
 
 executable haskell-learn-exe
@@ -51,7 +52,11 @@ executable haskell-learn-exe
   ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       base >=4.7 && <5
+    , deepseq
     , haskell-learn
+    , primitive
+    , vector
+    , vector-stream
   default-language: Haskell2010
 
 test-suite haskell-learn-test
@@ -66,5 +71,9 @@ test-suite haskell-learn-test
   ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       base >=4.7 && <5
+    , deepseq
     , haskell-learn
+    , primitive
+    , vector
+    , vector-stream
   default-language: Haskell2010
