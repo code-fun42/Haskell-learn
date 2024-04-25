@@ -26,6 +26,10 @@ source-repository head
 library
   exposed-modules:
       Lib
+      Medical.Analysis
+      Medical.Blood
+      Medical.Mod
+      Medical.Patient
   other-modules:
       Paths_haskell_learn
   autogen-modules:
