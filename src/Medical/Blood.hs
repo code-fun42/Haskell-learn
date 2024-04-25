@@ -4,6 +4,7 @@ module Medical.Blood
   ( ABOType (..),
     RhType (..),
     BloodType (..),
+    transfusion,
   )
 where
 
@@ -13,28 +14,59 @@ data ABOType = O | A | B | AB deriving (Show, Eq)
 
 data BloodType = BloodType ABOType RhType deriving (Show, Eq)
 
-instance Semigroup BloodType where
-  (<>) :: BloodType -> BloodType -> BloodType
-  (<>) a b
-    | a == b = a
-    | elem a [(BloodType O Neg)] && b == (BloodType O Neg) = (BloodType O Neg)
-    | elem a [(BloodType O Neg), (BloodType O Pos)] && b == (BloodType O Pos) = (BloodType O Pos)
-    | elem a [(BloodType O Neg), (BloodType A Pos)] && b == (BloodType A Neg) = (BloodType A Neg)
-    | elem a [(BloodType O Neg), (BloodType O Pos), (BloodType A Neg), (BloodType A Pos)] && b == (BloodType A Pos) = (BloodType A Pos)
-    | elem a [(BloodType O Neg), (BloodType B Neg)] && b == (BloodType B Neg) = (BloodType B Neg)
-    | elem a [(BloodType O Neg), (BloodType O Pos), (BloodType B Neg), (BloodType B Pos)] && b == (BloodType B Pos) = (BloodType B Pos)
-    | elem a [(BloodType O Neg), (BloodType A Pos), (BloodType B Neg), (BloodType AB Neg)] && b == (BloodType AB Neg) = (BloodType AB Neg)
-    | elem
-        a
-        [ (BloodType O Neg),
-          (BloodType O Pos),
-          (BloodType A Neg),
-          (BloodType A Pos),
-          (BloodType B Neg),
-          (BloodType B Pos),
-          (BloodType AB Neg),
-          (BloodType AB Pos)
-        ]
-        && b == (BloodType AB Pos) =
+data Donor = Donor BloodType deriving (Show, Eq)
+
+data Recipient = Recipient BloodType deriving (Show, Eq)
+
+data BloodTransfusion = BloodTransfusion Donor Recipient deriving (Show, Eq)
+
+data BloodTransfusionResult = Maybe BloodType deriving (Show, Eq)
+
+transfusion :: BloodType -> BloodType -> Maybe BloodType
+transfusion donor recipient
+  | donor == recipient = Just donor
+  | elem donor [(BloodType O Neg)] && recipient == (BloodType O Neg) = Just (BloodType O Neg)
+  | elem donor [(BloodType O Neg), (BloodType O Pos)] && recipient == (BloodType O Pos) = Just (BloodType O Pos)
+  | elem donor [(BloodType O Neg), (BloodType A Pos)] && recipient == (BloodType A Neg) = Just (BloodType A Neg)
+  | elem
+      donor
+      [ (BloodType O Neg),
+        (BloodType O Pos),
+        (BloodType A Neg),
+        (BloodType A Pos)
+      ]
+      && recipient == (BloodType A Pos) =
+      Just (BloodType A Pos)
+  | elem donor [(BloodType O Neg), (BloodType B Neg)] && recipient == (BloodType B Neg) = Just (BloodType B Neg)
+  | elem
+      donor
+      [ (BloodType O Neg),
+        (BloodType O Pos),
+        (BloodType B Neg),
+        (BloodType B Pos)
+      ]
+      && recipient == (BloodType B Pos) =
+      Just (BloodType B Pos)
+  | elem
+      donor
+      [ (BloodType O Neg),
+        (BloodType A Pos),
+        (BloodType B Neg),
+        (BloodType AB Neg)
+      ]
+      && recipient == (BloodType AB Neg) =
+      Just (BloodType AB Neg)
+  | elem
+      donor
+      [ (BloodType O Neg),
+        (BloodType O Pos),
+        (BloodType A Neg),
+        (BloodType A Pos),
+        (BloodType B Neg),
+        (BloodType B Pos),
+        (BloodType AB Neg),
         (BloodType AB Pos)
-    | otherwise = (BloodType AB Pos)
+      ]
+      && recipient == (BloodType AB Pos) =
+      Just (BloodType AB Pos)
+  | otherwise = Nothing
