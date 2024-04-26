@@ -50,7 +50,7 @@ transfusion donor recipient
   | elem
       donor
       [ (BloodType O Neg),
-        (BloodType A Pos),
+        (BloodType A Neg),
         (BloodType B Neg),
         (BloodType AB Neg)
       ]
